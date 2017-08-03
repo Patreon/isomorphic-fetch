@@ -8,9 +8,9 @@ module.exports = function(url, options) {
 	return realFetch.call(this, url, options);
 };
 
-if (!global.fetch) {
-	global.fetch = module.exports;
-	global.Response = realFetch.Response;
-	global.Headers = realFetch.Headers;
-	global.Request = realFetch.Request;
-}
+// Because Edge 14 has fetch but its implementation is broken,
+// don't check for existence of global.fetch. Just always polyfill it.
+global.fetch = module.exports;
+global.Response = realFetch.Response;
+global.Headers = realFetch.Headers;
+global.Request = realFetch.Request;
