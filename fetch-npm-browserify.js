@@ -3,4 +3,11 @@
 //
 // Return that as the export for use in Webpack, Browserify etc.
 require('whatwg-fetch');
-module.exports = self.fetch.bind(self);
+
+var useCurrentGlobalFetch = function(url, options) {
+    /* LogRocket.init() runs in app code and replaces global fetch, so
+    at request time, always get the latest instance of fetch from window. -- @george */
+    return self.fetch.call(self, url, options);
+};
+
+module.exports = useCurrentGlobalFetch
